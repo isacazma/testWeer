@@ -44,7 +44,7 @@ public class Main {
         for (Reiziger r : reizigers) {
             System.out.println(r);
         }
-        System.out.println();
+        System.out.println("\n maak nieuwe reiziger \n ");
 
         // Maak een nieuwe reiziger aan en persisteer deze in de database
         String gbdatum = "1981-03-14";
@@ -58,14 +58,20 @@ public class Main {
 
         rdao.update(sietska);
 
-
+        reizigers = rdao.findAll();
+        System.out.println("\n [Test] ReizigerDAO.update 8 geeft de volgende reizigers:");
+        for (Reiziger r : reizigers) {
+            System.out.println(r);
+        }
         rdao.delete(sietska);
 
         reizigers = rdao.findAll();
-        System.out.println("[Test] ReizigerDAO.findAll() geeft de volgende reizigers:");
+        System.out.println("\n [Test] na delet reizigers:");
         for (Reiziger r : reizigers) {
             System.out.println(r);
         }
         // Voeg aanvullende tests van de ontbrekende CRUD-operaties in.
+
+        System.out.println("\n"+rdao.findById(2));
     }
 }

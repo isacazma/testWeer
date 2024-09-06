@@ -38,11 +38,9 @@ public class ReizigerDaoPostgres implements ReizigerDAO {
     @Override
     public boolean update(Reiziger reiziger) throws SQLException {
 //        https://stackoverflow.com/questions/40126787/update-sql-database-with-preparedstatement-in-java
-        PreparedStatement statement = connection.prepareStatement("UPDATE reiziger SET  voorletters = ?, tussenvoegsel = ?, achternaam = ?, geboortedatum = ? WHERE reiziger_id = ?");
-
-
+        PreparedStatement statement = connection.prepareStatement("UPDATE reiziger SET  voorletters = ?, " +
+                "tussenvoegsel = ?, achternaam = ?, geboortedatum = ? WHERE reiziger_id = ?");
         try {
-
             statement.setString(1, reiziger.getVoorletters());
             statement.setString(2, reiziger.getTussenvoegsel());
             statement.setString(3, reiziger.getAchternaam());
@@ -54,7 +52,6 @@ public class ReizigerDaoPostgres implements ReizigerDAO {
         } catch (SQLException throwables) {
             System.err.println("SQLException: " + throwables.getMessage());
         }
-
         return false;
     }
 
@@ -78,7 +75,6 @@ public class ReizigerDaoPostgres implements ReizigerDAO {
 
     @Override
     public Reiziger findById(int id) throws SQLException {
-
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM reiziger  WHERE reiziger_id =?");
         try {
             statement.setInt(1,id);
@@ -99,73 +95,6 @@ public class ReizigerDaoPostgres implements ReizigerDAO {
         }
 
         return null;
-    }
-
-    @Override
-    public List<Reiziger>  findByVoorLetters(String voor) throws SQLException {
-        List<Reiziger> reizigers = new ArrayList<Reiziger>();
-        PreparedStatement statement = connection.prepareStatement("SELECT * FROM reiziger  WHERE voorletters =?");
-
-        try {
-            statement.setString(1,voor);
-            ResultSet resultSet = statement.executeQuery();
-
-            while (resultSet.next() ) {
-                int reizigerId = resultSet.getInt("reiziger_id");
-                String voorletters = resultSet.getString("voorletters");
-                String tussenvoegsel = resultSet.getString("tussenvoegsel");
-                String achternaam = resultSet.getString("achternaam");
-                java.sql.Date geboortedatum = resultSet.getDate("geboortedatum");;
-
-                reizigers.add(new Reiziger(reizigerId,voorletters,tussenvoegsel,achternaam,geboortedatum));
-            }
-            return reizigers;
-
-        } catch (SQLException throwables) {
-            System.err.println("SQLException: " + throwables.getMessage());
-        }
-
-        return null;
-    }
-
-    @Override
-    public List<Reiziger>  findByAchternaam(String achter) throws SQLException {
-        List<Reiziger> reizigers = new ArrayList<Reiziger>();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM reiziger;");
-
-        System.out.println("Alle reizigers:");
-        while (resultSet.next() && resultSet != null) {
-            int reizigerId =  resultSet.getInt("reiziger_id") ;
-            String voorletter = resultSet.getString("voorletters") ;
-            String tussenvoegsel = resultSet.getString("tussenvoegsel");
-            String achternaam = resultSet.getString("achternaam") ;
-            Date geboortedatum = resultSet.getDate("geboortedatum") ;
-
-            reizigers.add(new Reiziger(reizigerId,voorletter,tussenvoegsel,achternaam,geboortedatum));
-
-        }
-        return reizigers;
-    }
-
-    @Override
-    public List<Reiziger> findByDate(Date geboortedatum) throws SQLException {
-        List<Reiziger> reizigers = new ArrayList<Reiziger>();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("SELECT * FROM reiziger;");
-
-        System.out.println("Alle reizigers:");
-        while (resultSet.next() && resultSet != null) {
-            int reizigerId =  resultSet.getInt("reiziger_id") ;
-            String voorletter = resultSet.getString("voorletters") ;
-            String tussenvoegsel = resultSet.getString("tussenvoegsel");
-            String achternaam = resultSet.getString("achternaam") ;
-            Date geboortedatu = resultSet.getDate("geboortedatum") ;
-
-            reizigers.add(new Reiziger(reizigerId,voorletter,tussenvoegsel,achternaam,geboortedatu));
-
-        }
-        return reizigers;
     }
 
     @Override

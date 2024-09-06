@@ -9,19 +9,6 @@ public class Main {
         getConnection();
         testConnection();
 
-//        try {
-//            String url = "jdbc:postgresql://localhost5433/fabriek?user=postgres&password=kayadibi";
-//
-//            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5433/ovchip", "postgres", "kayadibi");
-//
-//
-//        }
-//
-//         catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-
-
 
     }
     private static Connection getConnection() throws SQLException {
